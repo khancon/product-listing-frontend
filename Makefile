@@ -12,7 +12,9 @@ run:
 
 buildrun: build run
 
-git:
-	git remote add origin https://github.com/khancon/product-listing-frontend.git
-	git branch -M main
-	git push -u origin main
+stop:
+	@if [ -n "$$(docker ps -q --filter "ancestor=product-listing-frontend")" ]; then \
+		docker stop $$(docker ps -q --filter "ancestor=product-listing-frontend"); \
+	else \
+		echo "No running containers with filter 'product-listing-frontend' to stop."; \
+	fi
